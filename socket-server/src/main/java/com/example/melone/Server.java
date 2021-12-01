@@ -14,7 +14,8 @@ public class Server extends Thread {
     BufferedReader indalclient;
     DataOutputStream outversoclient;
     ArrayClient x;
-
+    int conta;
+    ArrayList<Double> lista=new ArrayList<Double>();
 
     public Server(Socket socket, ServerSocket server, ArrayClient x) {
         this.client = socket;
@@ -37,7 +38,7 @@ public class Server extends Thread {
         tcpserver.start();
     }
 
-    // passa la stringa al server e la mette in maiuscolo
+    // passa la stringa al server e la mette in maiuscol
     public void comunica() throws Exception 
     {
 
@@ -50,9 +51,34 @@ public class Server extends Thread {
                 outversoclient.writeBytes(stringaricevuta + " server in chiusura ... " + '\n');
                 System.out.println("Echo sul server in chiusura: " + stringaricevuta);
                 break;
-            } else {
-                stringamodificata = stringaricevuta.toUpperCase();
-                outversoclient.writeBytes(stringamodificata + " ricevuta e trasmessa" + '\n');
+            } else 
+            
+            {
+                
+                double numero=Double.parseDouble(stringaricevuta);
+                stringamodificata = ""+numero;
+                lista.add(numero);
+                outversoclient.writeBytes("" + '\n');
+                
+                
+                Collections.sort(lista);
+                outversoclient.writeBytes("RISULTATO LISTA:"+lista);
+                
+                for (int i = 0; i < lista.size() - 1; i++) 
+                {
+     
+                    if (lista.get(i) == lista.get(i + 1) - 1) 
+                    {
+                        conta++;
+                    }
+                        
+                    
+                    if (conta>5)
+                    {
+                        outversoclient.writeBytes("Hai vinto!"+"\n");
+                    }
+                }
+  
                 System.out.println("6 Echo sul server: " + stringamodificata);
             }
         }
@@ -61,17 +87,8 @@ public class Server extends Thread {
         System.out.println("9 chiusura socket" + client);
 
         client.close(); //chiusura socketclient
-        if (stringaricevuta.equals("STOP")) {
-            server.close(); //chiusura socketserver
-            ArrayList<Socket> client2;
-            client2= x.getClient();
-            for(int i = 0; i < client2.size();i++)
-            {
-                client2.get(i).close();
-            }
-        }
-
     }
+
 
 
 

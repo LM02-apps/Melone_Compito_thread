@@ -47,9 +47,6 @@ public class Client {
 
     public void comunica() 
     {
-        ControlloClient controllo=new ControlloClient(msocket);
-        controllo.start();//ad "inserisci la stringa" il codice si ferma, inserire thread lì
-
         for (;;) 
         {
             try 
@@ -64,7 +61,7 @@ public class Client {
 
                 stringarispostaserver = indalserver.readLine();
                 System.out.println("risposta dal server" + '\n' + stringarispostaserver);
-                if (stringautente.equals("FINE") ||stringautente.equals("STOP") ) 
+                if (stringarispostaserver.contains("Hai vinto!") ) 
                 {
                     System.out.println("client termina istruzioni e chiude connessione");
                     msocket.close();
