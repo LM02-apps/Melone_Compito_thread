@@ -38,7 +38,7 @@ public class Server extends Thread {
         tcpserver.start();
     }
 
-    // passa la stringa al server e la mette in maiuscol
+    
     public void comunica() throws Exception 
     {
 
@@ -46,7 +46,7 @@ public class Server extends Thread {
         outversoclient = new DataOutputStream(client.getOutputStream());
         for (;;) {
             stringaricevuta = indalclient.readLine();
-            if (stringaricevuta == null || stringaricevuta.equals("FINE") || stringaricevuta.equals("STOP")) {
+            if (stringaricevuta == null || stringaricevuta.equals("FINE")) {
 
                 outversoclient.writeBytes(stringaricevuta + " server in chiusura ... " + '\n');
                 System.out.println("Echo sul server in chiusura: " + stringaricevuta);

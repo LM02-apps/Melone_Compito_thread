@@ -20,12 +20,10 @@ public class Client {
     {
         Client mclient = new Client();
         
-
         mclient.connetti();
         mclient.comunica();
     }
-    //usare il metodo isconnected sul socket per sapere se il server è chiuso oppure no, 
-    //ogni 2 secondi con thread.sleep fa il controllo
+
 
     public Socket connetti() {
 
